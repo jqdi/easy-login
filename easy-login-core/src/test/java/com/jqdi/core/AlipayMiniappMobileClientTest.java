@@ -2,6 +2,7 @@ package com.jqdi.core;
 
 import com.jqdi.core.repository.CacheOauthRepository;
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.ali.miniappmobile.AlipayMiniappMobileClient;
 import com.jqdi.easylogin.core.ali.miniappmobile.request.AlipayMaMobileRequest;
 import com.jqdi.easylogin.core.ali.miniappmobile.request.IAlipayMaMobileRequest;
@@ -21,7 +22,7 @@ public class AlipayMiniappMobileClientTest {
 
 		String authcode = "aaaaaa";
 
-		String userId = loginClient.login(null, null, authcode);
+		String userId = loginClient.login(LoginParams.builder().alipayMiniappMobile(authcode).build());
 		System.out.println(userId);
 	}
 }

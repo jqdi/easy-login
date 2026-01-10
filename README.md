@@ -7,6 +7,9 @@
 | 用户名+密码                | √      |
 | 手机号+密码            	 | √      |
 | 邮箱+密码                  | √      |
+| 用户名+密码+验证码                | √      |
+| 手机号+密码+验证码            	 | √      |
+| 邮箱+密码+验证码                  | √      |
 | 本机号码一键登录           | √      |
 | 手机号+验证码              | √      |
 | 邮箱+验证码                | √      |
@@ -35,23 +38,26 @@ easy-login
 
 ### SpringBoot自动装配条件
 
-| 登录方式                   | 实现类                        | 装配条件                                    |
-| -------------------------- | ----------------------------- |---------------------------------------------|
-| 用户名+密码                | UsernamePasswordClient        | 实现PasswordRepository                      |
-| 手机号+密码            	 | MobilePasswordClient          | 实现PasswordRepository                      |
-| 邮箱+密码                  | EmailPasswordClient           | 实现PasswordRepository                      |
-| 本机号码一键登录           | LocalMobileClient             | 配置easylogin.localMobile.accessKeyId       |
-| 手机号+验证码              | MobileCodeClient              | 实现VerifycodeRepository                    |
-| 手机号+验证码+绑定授权     | MobileCodeBindClient          | 实现VerifycodeRepository                    |
-| 邮箱+验证码                | EmailCodeClient               | 实现VerifycodeRepository                    |
-| 邮箱+验证码+绑定授权       | EmailCodeBindClient           | 实现VerifycodeRepository                    |
-| 微信授权登录（APP）        | WeixinAppClient               | 配置easylogin.weixinApp.appid               |
-| 微信授权登录（小程序）     | WeixinMiniappClient           | 配置easylogin.weixinMiniapp.appid           |
-| 微信授权登录（小程序）     | WeixinMiniappMobileClient     | 配置easylogin.weixinMiniappMobile.appid     |
-| 微信授权登录（公众号）     | WeixinMpClient                | 配置easylogin.weixinMp.appid                |
-| 支付宝授权登录（小程序）   | AlipayMiniappClient           | 配置easylogin.alipayMiniapp.appid           |
-| 支付宝授权登录（小程序）   | AlipayMiniappMobileClient     | 配置easylogin.alipayMiniappMobile.appid     |
-| QQ授权登录   				 | QQClient     				 | 配置easylogin.qq.appid     				   |
+| 登录方式                  | 实现类                        | 装配条件                                     |
+| ------------------------- |----------------------------|------------------------------------------|
+| 用户名+密码               | UsernamePasswordClient     | 实现PasswordRepository                     |
+| 手机号+密码            	 | MobilePasswordClient       | 实现PasswordRepository                     |
+| 邮箱+密码                 | EmailPasswordClient        | 实现PasswordRepository                     |
+| 用户名+密码+验证码          | UsernamePasswordCodeClient | 实现PasswordRepository和VerifycodeRepository |
+| 手机号+密码+验证码          | MobilePasswordCodeClient       | 实现PasswordRepository和VerifycodeRepository |
+| 邮箱+密码+验证码           | EmailPasswordCodeClient        | 实现PasswordRepository和VerifycodeRepository |
+| 本机号码一键登录           | LocalMobileClient          | 配置easylogin.localMobile.accessKeyId      |
+| 手机号+验证码             | MobileCodeClient           | 实现VerifycodeRepository                   |
+| 手机号+验证码+绑定授权     | MobileCodeBindClient       | 实现VerifycodeRepository                   |
+| 邮箱+验证码               | EmailCodeClient            | 实现VerifycodeRepository                   |
+| 邮箱+验证码+绑定授权       | EmailCodeBindClient        | 实现VerifycodeRepository                   |
+| 微信授权登录（APP）        | WeixinAppClient            | 配置easylogin.weixinApp.appid              |
+| 微信授权登录（小程序）     | WeixinMiniappClient        | 配置easylogin.weixinMiniapp.appid          |
+| 微信授权登录（小程序）     | WeixinMiniappMobileClient  | 配置easylogin.weixinMiniappMobile.appid    |
+| 微信授权登录（公众号）     | WeixinMpClient             | 配置easylogin.weixinMp.appid               |
+| 支付宝授权登录（小程序）   | AlipayMiniappClient        | 配置easylogin.alipayMiniapp.appid          |
+| 支付宝授权登录（小程序）   | AlipayMiniappMobileClient  | 配置easylogin.alipayMiniappMobile.appid    |
+| QQ授权登录   				 | QQClient     				          | 配置easylogin.qq.appid     				            |
 
 ### 使用说明
 
@@ -64,14 +70,14 @@ mvn install，使用maven将源码编译成jar包并且安装到本地仓库，�
 <dependency>
     <groupId>com.jqdi</groupId>
     <artifactId>easy-login-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 <!-- 微信sdk -->
 <dependency>
-	<groupId>com.github.binarywang</groupId>
-	<artifactId>weixin-java-miniapp</artifactId>
-	<version>4.6.0</version>
-	<scope>provided</scope>
+    <groupId>com.github.binarywang</groupId>
+    <artifactId>weixin-java-miniapp</artifactId>
+    <version>4.6.0</version>
+    <scope>provided</scope>
 </dependency>
 ```
 #### 3：springboot yml 配置（如使用微信授权登录（小程序）），其他可参考easy-login-springboot-demo的pom配置
@@ -88,7 +94,7 @@ easylogin:
 	private LoginClient weixinMiniappMobileClient;
 
 	public String loginByWeixinMiniappMobile(String wxcode) {
-		String userId = weixinMiniappMobileClient.login(null, null, wxcode);
+		String userId = weixinMiniappMobileClient.login(LoginParams.builder().weixinMiniappMobile(wxcode).build());
 		String token = "generate token with userId:" + userId;
 		return token;
 	}

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.model.BindAuthCode;
@@ -39,7 +40,10 @@ public class QQClient implements LoginClient {
 	 * </pre>
 	 */
 	@Override
-	public String login(String ignore1, String redirectUri, String code) {
+	public String login(LoginParams params) {
+		String redirectUri = params.getCodeOrPasswordOrIv();
+		String code = params.getAuthcode();
+		
 		if (StringUtils.isBlank(code)) {
 			throw new LoginException("缺失参数");
 		}

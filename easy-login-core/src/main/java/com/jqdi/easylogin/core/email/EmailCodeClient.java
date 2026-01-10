@@ -3,6 +3,7 @@ package com.jqdi.easylogin.core.email;
 import org.apache.commons.lang3.StringUtils;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.repository.VerifycodeRepository;
@@ -24,7 +25,10 @@ public class EmailCodeClient implements LoginClient {
 	}
 
 	@Override
-	public String login(String email, String code, String ignore3) {
+	public String login(LoginParams params) {
+		String email = params.getMobileOrUsernameOrEncryptedData();
+		String code = params.getCodeOrPasswordOrIv();
+		
 		if (StringUtils.isBlank(email) || StringUtils.isBlank(code)) {
 			throw new LoginException("缺失参数");
 		}

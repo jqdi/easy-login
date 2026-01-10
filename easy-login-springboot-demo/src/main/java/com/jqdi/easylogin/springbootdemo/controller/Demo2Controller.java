@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.spring.boot.starter.LoginType;
 
@@ -29,7 +30,7 @@ public class Demo2Controller {
 	public String loginByWeixinMiniappMobile(String wxcode) {
 		String userId = null;
 		try {
-			userId = weixinMiniappMobileClient.login(null, null, wxcode);
+			userId = weixinMiniappMobileClient.login(LoginParams.builder().weixinMiniappMobile(wxcode).build());
 		} catch (LoginException e) {
 			// "登录失败";
 			return "";

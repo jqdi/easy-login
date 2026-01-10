@@ -3,6 +3,7 @@ package com.jqdi.easylogin.core.wx.miniappmobile;
 import org.apache.commons.lang3.StringUtils;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.repository.OauthRepository;
@@ -23,7 +24,9 @@ public class WeixinMiniappMobileClient implements LoginClient {
 	}
 
 	@Override
-	public String login(String ignore1, String ignore2, String code) {
+	public String login(LoginParams params) {
+		String code = params.getAuthcode();
+		
 		if (StringUtils.isBlank(code)) {
 			throw new LoginException("缺失参数");
 		}

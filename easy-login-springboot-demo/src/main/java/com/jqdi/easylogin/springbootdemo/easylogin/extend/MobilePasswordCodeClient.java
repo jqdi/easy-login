@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.repository.OauthRepository;
@@ -24,7 +25,11 @@ public class MobilePasswordCodeClient implements LoginClient {
 	}
 
 	@Override
-	public String login(String mobile, String password, String code) {
+	public String login(LoginParams params) {
+		String mobile = params.getMobileOrUsernameOrEncryptedData();
+		String password = params.getCodeOrPasswordOrIv();
+		String code = params.getAuthcode();
+		
 		if (StringUtils.isBlank(mobile) || StringUtils.isBlank(password) || StringUtils.isBlank(code)) {
 			throw new LoginException("缺失参数");
 		}

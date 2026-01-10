@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.model.BindAuthCode;
@@ -40,7 +41,9 @@ public class WeixinMpClient implements LoginClient {
 	 * </pre>
 	 */
 	@Override
-	public String login(String ignore1, String ignore2, String wxcode) {
+	public String login(LoginParams params) {
+		String wxcode = params.getAuthcode();
+		
 		if (StringUtils.isBlank(wxcode)) {
 			throw new LoginException("缺失参数");
 		}

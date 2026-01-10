@@ -3,6 +3,7 @@ package com.jqdi.easylogin.core.ali.miniappmobile;
 import org.apache.commons.lang3.StringUtils;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.ali.miniappmobile.model.AliMobileUserId;
 import com.jqdi.easylogin.core.ali.miniappmobile.request.IAlipayMaMobileRequest;
 import com.jqdi.easylogin.core.constants.IdentityType;
@@ -24,7 +25,9 @@ public class AlipayMiniappMobileClient implements LoginClient {
 	}
 	
 	@Override
-	public String login(String ignore1, String ignore2, String authcode) {
+	public String login(LoginParams params) {
+		String authcode = params.getAuthcode();
+		
 		if (StringUtils.isBlank(authcode)) {
 			throw new LoginException("缺失参数");
 		}

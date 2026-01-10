@@ -3,6 +3,7 @@ package com.jqdi.easylogin.core.mobile;
 import org.apache.commons.lang3.StringUtils;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.mobile.request.ILocalMobileRequest;
@@ -23,7 +24,9 @@ public class LocalMobileClient implements LoginClient {
 	}
 	
 	@Override
-	public String login(String accessToken, String ignore2, String ignore3) {
+	public String login(LoginParams params) {
+		String accessToken = params.getMobileOrUsernameOrEncryptedData();
+		
 		if (StringUtils.isBlank(accessToken)) {
 			throw new LoginException("缺失参数");
 		}

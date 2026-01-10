@@ -2,6 +2,7 @@ package com.jqdi.core;
 
 import com.jqdi.core.repository.CacheOauthRepository;
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.mobile.LocalMobileClient;
 import com.jqdi.easylogin.core.mobile.request.AliyunOneKeyLoginRequest;
 import com.jqdi.easylogin.core.mobile.request.ILocalMobileRequest;
@@ -20,7 +21,7 @@ public class LocalMobileClientTest {
 		LoginClient loginClient = new LocalMobileClient(oauthRepository, localMobileRequest);
 
 		String accessToken = "aaaaaaaaaaaaa";
-		String userId = loginClient.login(accessToken, null, null);
+		String userId = loginClient.login(LoginParams.builder().localMobile(accessToken).build());
 		System.out.println(userId);
 	}
 }

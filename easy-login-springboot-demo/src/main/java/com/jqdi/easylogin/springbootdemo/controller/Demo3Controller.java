@@ -1,5 +1,6 @@
 package com.jqdi.easylogin.springbootdemo.controller;
 
+import com.jqdi.easylogin.core.LoginParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class Demo3Controller {
 
 		String userId = null;
 		try {
-			userId = weixinAppClient.login(null, null, wxcode);
+			userId = weixinAppClient.login(LoginParams.builder().weixinApp(wxcode).build());
 		} catch (LoginException e) {
 			// "登录失败";
 			return new LoginResp();
@@ -67,7 +68,7 @@ public class Demo3Controller {
 		String bindCode = loginByMobileReq.getBindCode();
 		String userId = null;
 		try {
-			userId = mobileCodeBindClient.login(mobile, code, bindCode);// 一定会返回userId
+			userId = mobileCodeBindClient.login(LoginParams.builder().mobileCodeBind(mobile, code, bindCode).build());// 一定会返回userId
 		} catch (LoginException e) {
 			// "登录失败";
 			return "";

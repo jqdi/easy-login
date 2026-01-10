@@ -3,6 +3,7 @@ package com.jqdi.easylogin.core.ali.miniapp;
 import org.apache.commons.lang3.StringUtils;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.ali.miniapp.request.IAlipayMaRequest;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
@@ -23,7 +24,10 @@ public class AlipayMiniappClient implements LoginClient {
 	}
 
 	@Override
-	public String login(String encryptedData, String ignore2, String authcode) {
+	public String login(LoginParams params) {
+		String encryptedData = params.getMobileOrUsernameOrEncryptedData();
+		String authcode = params.getAuthcode();
+		
 		if (StringUtils.isBlank(encryptedData)) {
 			throw new LoginException("缺失参数");
 		}

@@ -3,6 +3,7 @@ package com.jqdi.core;
 import com.jqdi.core.repository.CacheOauthRepository;
 import com.jqdi.core.repository.CachePasswordRepository;
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.password.EmailPasswordClient;
 import com.jqdi.easylogin.core.repository.OauthRepository;
 import com.jqdi.easylogin.core.repository.PasswordRepository;
@@ -17,7 +18,7 @@ public class EmailPasswordClientTest {
 
 		String email = "6666666@qq.com";
 		String password = "aaaaaaaaaaaaa";
-		String userId = loginClient.login(email, password, null);
+		String userId = loginClient.login(LoginParams.builder().emailPassword(email, password).build());
 		System.out.println(userId);
 	}
 }

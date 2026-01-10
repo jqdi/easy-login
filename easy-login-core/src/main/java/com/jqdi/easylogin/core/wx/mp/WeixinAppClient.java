@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.constants.IdentityType;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.model.BindAuthCode;
@@ -39,7 +40,9 @@ public class WeixinAppClient implements LoginClient {
 	 * </pre>
 	 */
 	@Override
-	public String login(String ignore1, String ignore2, String wxcode) {
+	public String login(LoginParams params) {
+		String wxcode = params.getAuthcode();
+		
 		if (StringUtils.isBlank(wxcode)) {
 			throw new LoginException("缺失参数");
 		}
@@ -87,7 +90,7 @@ public class WeixinAppClient implements LoginClient {
 			bindAuthCode.setHeadimgurl(Optional.ofNullable(userinfo).map(MpUserInfo::getHeadimgurl).orElse(null));
 			List<BindUserOauth> binds = Lists.newArrayList();
 			binds.add(new BindUserOauth().setIdentityType(IdentityType.WX_OPENID_APP)
-					.setIdentifier(openid));
+						.setIdentifier(openid));
 			binds.add(
 					new BindUserOauth().setIdentityType(IdentityType.WX_UNIONID).setIdentifier(unionid));
 			bindAuthCode.setBinds(binds);

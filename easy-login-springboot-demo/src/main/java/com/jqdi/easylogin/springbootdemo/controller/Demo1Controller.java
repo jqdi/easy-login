@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.spring.boot.starter.LoginType;
 
@@ -31,7 +32,7 @@ public class Demo1Controller {
 	public String loginByMobile(String mobile, String code) {
 		String userId = null;
 		try {
-			userId = mobileCodeClient.login(mobile, code, null);
+			userId = mobileCodeClient.login(LoginParams.builder().mobileCode(mobile, code).build());
 		} catch (LoginException e) {
 			// "登录失败";
 			return "";

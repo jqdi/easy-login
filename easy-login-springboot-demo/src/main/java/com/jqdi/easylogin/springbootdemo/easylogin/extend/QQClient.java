@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.jqdi.easylogin.core.LoginClient;
+import com.jqdi.easylogin.core.LoginParams;
 import com.jqdi.easylogin.core.exception.LoginException;
 import com.jqdi.easylogin.core.repository.OauthRepository;
 
@@ -16,7 +17,9 @@ public class QQClient implements LoginClient {
 	}
 
 	@Override
-	public String login(String ignore1, String ignore2, String qqcode) {
+	public String login(LoginParams params) {
+		String qqcode = params.getAuthcode();
+		
 		if (StringUtils.isBlank(qqcode)) {
 			throw new LoginException("缺失参数");
 		}

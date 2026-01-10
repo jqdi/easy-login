@@ -1,12 +1,5 @@
 package com.jqdi.easylogin.spring.boot.starter;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.jqdi.easylogin.core.LoginClient;
 import com.jqdi.easylogin.core.ali.miniapp.AlipayMiniappClient;
 import com.jqdi.easylogin.core.ali.miniapp.request.AlipayMaRequest;
@@ -21,9 +14,7 @@ import com.jqdi.easylogin.core.mobile.MobileCodeBindClient;
 import com.jqdi.easylogin.core.mobile.MobileCodeClient;
 import com.jqdi.easylogin.core.mobile.request.AliyunOneKeyLoginRequest;
 import com.jqdi.easylogin.core.mobile.request.ILocalMobileRequest;
-import com.jqdi.easylogin.core.password.EmailPasswordClient;
-import com.jqdi.easylogin.core.password.MobilePasswordClient;
-import com.jqdi.easylogin.core.password.UsernamePasswordClient;
+import com.jqdi.easylogin.core.password.*;
 import com.jqdi.easylogin.core.qq.QQClient;
 import com.jqdi.easylogin.core.qq.request.APIRequest;
 import com.jqdi.easylogin.core.qq.request.IQQRequest;
@@ -41,14 +32,13 @@ import com.jqdi.easylogin.core.wx.mp.WeixinAppClient;
 import com.jqdi.easylogin.core.wx.mp.WeixinMpClient;
 import com.jqdi.easylogin.core.wx.mp.request.BinarywangMpRequest;
 import com.jqdi.easylogin.core.wx.mp.request.IMpRequest;
-import com.jqdi.easylogin.spring.boot.starter.properties.AlipayMiniappMobileProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.AlipayMiniappProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.LocalMobileProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.QQProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.WeixinAppProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.WeixinMiniappMobileProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.WeixinMiniappProperties;
-import com.jqdi.easylogin.spring.boot.starter.properties.WeixinMpProperties;
+import com.jqdi.easylogin.spring.boot.starter.properties.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConditionalOnBean(OauthRepository.class)
@@ -76,6 +66,27 @@ public class EasyLoginAutoConfiguration {
 	@ConditionalOnBean(PasswordRepository.class)
 	LoginClient emailPasswordClient(OauthRepository oauthRepository, PasswordRepository passwordRepository) {
 		return new EmailPasswordClient(oauthRepository, passwordRepository);
+	}
+
+	@Bean(LoginType.USERNAME_PASSWORD_CODE)
+	@ConditionalOnMissingBean(name = LoginType.USERNAME_PASSWORD_CODE)
+	@ConditionalOnBean({PasswordRepository.class, VerifycodeRepository.class})
+	LoginClient usernamePasswordCodeClient(OauthRepository oauthRepository, PasswordRepository passwordRepository, VerifycodeRepository verifycodeRepository) {
+		return new UsernamePasswordCodeClient(oauthRepository, passwordRepository, verifycodeRepository);
+	}
+
+	@Bean(LoginType.MOBILE_PASSWORD_CODE)
+	@ConditionalOnMissingBean(name = LoginType.MOBILE_PASSWORD_CODE)
+	@ConditionalOnBean({PasswordRepository.class, VerifycodeRepository.class})
+	LoginClient mobilePasswordCodeClient(OauthRepository oauthRepository, PasswordRepository passwordRepository, VerifycodeRepository verifycodeRepository) {
+		return new MobilePasswordCodeClient(oauthRepository, passwordRepository, verifycodeRepository);
+	}
+
+	@Bean(LoginType.EMAIL_PASSWORD_CODE)
+	@ConditionalOnMissingBean(name = LoginType.EMAIL_PASSWORD_CODE)
+	@ConditionalOnBean({PasswordRepository.class, VerifycodeRepository.class})
+	LoginClient emailPasswordCodeClient(OauthRepository oauthRepository, PasswordRepository passwordRepository, VerifycodeRepository verifycodeRepository) {
+		return new EmailPasswordCodeClient(oauthRepository, passwordRepository, verifycodeRepository);
 	}
 
 	@Bean(LoginType.LOCAL_MOBILE)
