@@ -3,14 +3,42 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.jqdi</groupId>
+	<groupId>io.github.jqdi</groupId>
 	<artifactId>easy-login</artifactId>
-	<version>1.0.1</version>
+    <version>${revision}</version>
 	<packaging>pom</packaging>
 
-	<description>登录</description>
+	<name>easy-login</name>
+	<description>一个封装了登录的框架，支持密码、本机号码一键登录、微信授权登录（小程序、APP、公众号）、支付宝授权登录（小程序）等</description>
+	<url>https://github.com/jqdi/easy-login</url>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>jqdi</id>
+			<name>JQ棣</name>
+			<email>897665787@qq.com</email>
+			<url>https://github.com/jqdi</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://github.com/jqdi/easy-login.git</connection>
+		<developerConnection>scm:git:https://github.com/jqdi/easy-login.git</developerConnection>
+		<url>https://github.com/jqdi/easy-login</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
+        <!--项目版本定义、升级统一改这里-->
+        <revision>1.0.3</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -20,8 +48,16 @@
 		<!-- 核心模块 -->
 		<module>easy-login-core</module>
 		<module>easy-login-spring-boot-starter</module>
-		<!--<module>easy-login-springboot-demo</module>-->
+        <!-- demo模块 -->
+		<module>easy-login-springboot-demo</module>
 	</modules>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>central</id>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -45,18 +81,101 @@
 				</configuration>
 			</plugin>
 			<!--配置生成源码包-->
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-source-plugin</artifactId>
-	            <executions>
-	                <execution>
-	                    <id>attach-sources</id>
-	                    <goals>
-	                        <goal>jar</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--配置生成Javadoc文档-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalJOptions>
+                                <additionalJOption>-Xdoclint:none</additionalJOption>
+                            </additionalJOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 配置部署插件用于SNAPSHOT发布 -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            -->
+            <!-- 配置部署插件用于Release发布 -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.9.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- 需与maven setting.xml中配置的server的id一致 -->
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+            </plugin>
+            <!--配置GPG签名插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--构建过程中，将占位符替换为实际值-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.7.0</version>
+                <configuration>
+                    <!-- 是否将生成的扁平化POM设置为项目文件 -->
+                    <updatePomFile>true</updatePomFile>
+                    <!-- 扁平化模式，常用的是处理占位符 -->
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <!-- 绑定到process-resources阶段，自动执行flatten目标 -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <!-- 清理生成的文件 -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 	</build>
+
 </project>

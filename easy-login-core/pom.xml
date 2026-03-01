@@ -1,17 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<groupId>com.jqdi</groupId>
+		<groupId>io.github.jqdi</groupId>
 		<artifactId>easy-login</artifactId>
-		<version>1.0.1</version>
+        <version>${revision}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
+	<name>easy login core</name>
 	<artifactId>easy-login-core</artifactId>
 	<packaging>jar</packaging>
 
-	<description>核心代码</description>
+	<description>easy login 核心代码</description>
 
 	<dependencies>
 		<!-- 工具依赖 -->
@@ -56,7 +57,7 @@
 			<version>4.6.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!--支付宝sdk-->
         <dependency>
             <groupId>com.alipay.sdk</groupId>

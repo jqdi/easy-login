@@ -1,10 +1,10 @@
 server:
-  port: 4001
+  port: 8080
 
 spring:
   application:
     name: springbootdemo
-    
+
 easylogin:
   weixinMiniapp: # 微信小程序登录方式一
     appid: 1111 #微信小程序的appid

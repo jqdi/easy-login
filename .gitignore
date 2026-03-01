@@ -6,3 +6,5 @@ target
 *.iml
 rebel.xml
 */logs/
+.vscode
+.flattened-pom.xml

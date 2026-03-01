@@ -60,24 +60,22 @@ easy-login
 | QQ授权登录   				 | QQClient     				          | 配置easylogin.qq.appid     				            |
 
 ### 使用说明
-
-#### 1：编译源码
-mvn install，使用maven将源码编译成jar包并且安装到本地仓库，如有私服也可以部署到私服
-
-#### 2：jar包引用（如使用微信授权登录（小程序）），其他可参考easy-login-core的pom配置
-
+#### 1：easy-login已发布至maven中央仓库，可以直接引入到项目中，maven依赖如下：
 ```
 <dependency>
-    <groupId>com.jqdi</groupId>
+    <groupId>io.github.jqdi</groupId>
     <artifactId>easy-login-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>{latest.version}</version>
 </dependency>
+```
+{latest.version}可通过[中央仓库](https://central.sonatype.com/artifact/io.github.jqdi/easy-login-spring-boot-starter)查询
+#### 2：如使用微信授权登录（小程序），需引入微信sdk，其他可参考easy-login-core的pom配置
+```
 <!-- 微信sdk -->
 <dependency>
     <groupId>com.github.binarywang</groupId>
     <artifactId>weixin-java-miniapp</artifactId>
     <version>4.6.0</version>
-    <scope>provided</scope>
 </dependency>
 ```
 #### 3：springboot yml 配置（如使用微信授权登录（小程序）），其他可参考easy-login-springboot-demo的pom配置
@@ -89,15 +87,15 @@ easylogin:
 ```
 #### 4：在代码中使用
 ```
-	@Autowired
-	@Qualifier(LoginType.WEIXIN_MINIAPP_MOBILE)
-	private LoginClient weixinMiniappMobileClient;
+@Autowired
+@Qualifier(LoginType.WEIXIN_MINIAPP_MOBILE)
+private LoginClient weixinMiniappMobileClient;
 
-	public String loginByWeixinMiniappMobile(String wxcode) {
-		String userId = weixinMiniappMobileClient.login(LoginParams.builder().weixinMiniappMobile(wxcode).build());
-		String token = "generate token with userId:" + userId;
-		return token;
-	}
+public String loginByWeixinMiniappMobile(String wxcode) {
+    String userId = weixinMiniappMobileClient.login(LoginParams.builder().weixinMiniappMobile(wxcode).build());
+    String token = "generate token with userId:" + userId;
+    return token;
+}
 ```
 
 ### 开源共建
