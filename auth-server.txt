@@ -6,3 +6,134 @@ AuthenticationProvider 通过账号信息找到用户id，找不到就抛异常A
 
 生成token TokenGranter
 	token 格式 AbstractAuthenticationToken
+	
+	
+Oauth2请求授权码（浏览器打开）
+curl --request GET \
+  --url 'http://localhost:8081/oauth/authorize?response_type=code&client_id=R8T3N8&scope=read&redirect_uri=https://www.baidu.com' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915212' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
+
+Oauth2授权码模式
+curl --request POST \
+  --url 'http://localhost:8081/oauth/token?client_id=R8T3N8&client_secret=unity&grant_type=authorization_code&code=F2cAHx&redirect_uri=https://www.baidu.com' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915250' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
+
+Oauth2密码模式
+curl --request POST \
+  --url 'http://localhost:8081/oauth/token?client_id=R8T3N8&client_secret=unity&grant_type=password&username=admin&password=admin' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915336' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
+  
+Oauth2客户端模式
+curl --request POST \
+  --url 'http://localhost:8081/oauth/token?client_id=R8T3N8&client_secret=unity&grant_type=client_credentials' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915340' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
+
+Oauth2简化模式（浏览器打开）
+curl --request GET \
+  --url 'http://localhost:8081/oauth/authorize?client_id=R8T3N8&response_type=token&scope=read&redirect_uri=https://www.baidu.com' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915346' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
+
+Oauth2刷新token
+curl --request POST \
+  --url 'http://localhost:8081/oauth/token?client_id=R8T3N8&client_secret=unity&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsic29zLXJlc291cmNlIl0sImdyYW50X3R5cGUiOiJwYXNzd29yZCIsInVzZXJfbmFtZSI6ImFkbWluIiwic2NvcGUiOlsicmVhZCJdLCJhdGkiOiI5NmM4OWE3Yi1lMDc5LTRiYmMtOTRkMC00YTQ4YzY3MjQ3NDkiLCJleHAiOjE2ODYxMjYwMjMsImF1dGhvcml0aWVzIjpbInN5czpzeXNNZW51OnNhdmUiLCJzeXM6cm9sZTpkZWwiLCJzeXM6dXNlcjpsaXN0Iiwic3lzOnJvbGU6c2F2ZSIsInN5czpyb2xlUGVybWlzc2lvbjpkZWwiLCJzeXM6cGVybWlzc2lvbjpkZWwiLCJzeXM6cGVybWlzc2lvbk1lbnU6ZGVsIiwic3lzOnVzZXI6YXV0aG9yaXR5TGlzdCIsInN5czpwZXJtaXNzaW9uTWVudTp1cGRhdGUiLCJzeXM6c3lzTWVudTpsaXN0Iiwic3lzOnBlcm1pc3Npb246dXBkYXRlIiwic3lzOnN5c01lbnU6dXBkYXRlIiwic3lzOnJvbGVQZXJtaXNzaW9uOnVwZGF0ZSIsInN5czpyb2xlOnVwZGF0ZSIsInN5czpzeXNNZW51OmRlbCIsInN5czpwZXJtaXNzaW9uOnNhdmUiLCJzeXM6cm9sZVBlcm1pc3Npb246c2F2ZSIsInN5czpwZXJtaXNzaW9uTWVudTpzYXZlIiwic3lzOnVzZXI6dXBkYXRlIiwic3lzOnJvbGU6bGlzdCIsInN5czpwZXJtaXNzaW9uOmxpc3QiLCJzeXM6dXNlcjpzYXZlIiwiUk9MRV9yb290Iiwic3lzOnVzZXI6ZGVsIl0sImp0aSI6IjA2YmJlMWNmLWExN2EtNDYzOS04ZjgzLTdiOWVjMDJkMWI2ZSIsImNsaWVudF9pZCI6InVuaXR5LWNsaWVudCJ9.YxmA9d1zPTwuEsrme5iDKTIyOjkLNjYP_lQqKTz6eFc' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915350' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
+
+Oauth2验证token
+curl --request POST \
+  --url http://localhost:8081/oauth/check_token \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'content-type: multipart/form-data' \
+  --header 'timestamp: 1787915356' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2' \
+  --form token=3611e208-9b1c-4bec-99bd-aca31d5f3d51
+  
+自定义模式
+curl --request POST \
+  --url 'http://localhost:8081/oauth/token?client_id=R8T3N8&client_secret=unity&grant_type=platform&platformId=13479497466' \
+  --header 'Accept: */*' \
+  --header 'Accept-Encoding: gzip, deflate, br' \
+  --header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiIxIiwiZGV2aWNlVHlwZSI6InRlbXBsYXRlLXdlYiIsImVmZiI6LTEsInJuU3RyIjoiREZDWVpMVzhUekNUZTVITXl4WWo4eG1OazZiSmVvYk0ifQ.WsuJDQ8cdC_Q1GWXV7vZaeZgSU7h9lzIhDSL3GQKBHI' \
+  --header 'Connection: keep-alive' \
+  --header 'User-Agent: PostmanRuntime-ApipostRuntime/1.1.0' \
+  --header 'timestamp: 1787915366' \
+  --header 'x-channel: apipost' \
+  --header 'x-deviceid: 2945eb160046fe05ce241cc7f27e3289' \
+  --header 'x-operator: android' \
+  --header 'x-platform: app' \
+  --header 'x-source: dt_15333223333' \
+  --header 'x-version: 1.0.2'
