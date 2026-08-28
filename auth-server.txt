@@ -1,0 +1,8 @@
+https://gitee.com/ilusymon/auth-server.git
+
+AuthenticationProvider 通过账号信息找到用户id，找不到就抛异常AuthenticationException
+	AuthenticationEventPublisher eventPublisher.publishAuthenticationSuccess(result);
+	AuthenticationEventPublisher eventPublisher.publishAuthenticationFailure(ex, auth);
+
+生成token TokenGranter
+	token 格式 AbstractAuthenticationToken
