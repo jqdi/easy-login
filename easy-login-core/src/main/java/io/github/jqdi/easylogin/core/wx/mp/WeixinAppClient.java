@@ -1,7 +1,8 @@
 package io.github.jqdi.easylogin.core.wx.mp;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -86,14 +87,16 @@ public class WeixinAppClient implements LoginClient {
 			}
 			// 存储BindAuthCode相关信息
 			BindAuthCode bindAuthCode = new BindAuthCode();
-			bindAuthCode.setNickname(Optional.ofNullable(userinfo).map(MpUserInfo::getNickname).orElse(null));
-			bindAuthCode.setHeadimgurl(Optional.ofNullable(userinfo).map(MpUserInfo::getHeadimgurl).orElse(null));
-			List<BindUserOauth> binds = Lists.newArrayList();
-			binds.add(new BindUserOauth().setIdentityType(IdentityType.WX_OPENID_APP)
-						.setIdentifier(openid));
-			binds.add(
-					new BindUserOauth().setIdentityType(IdentityType.WX_UNIONID).setIdentifier(unionid));
-			bindAuthCode.setBinds(binds);
+            Map<String, String> attachDataMap = new HashMap<>();
+            if (userinfo != null) {
+                attachDataMap.put("nickname", userinfo.getNickname());
+                attachDataMap.put("headimgurl", userinfo.getHeadimgurl());
+            }
+            bindAuthCode.setAttachDataMap(attachDataMap);
+            List<BindUserOauth> binds = Lists.newArrayList();
+            binds.add(new BindUserOauth().setIdentityType(IdentityType.WX_OPENID_APP).setIdentifier(openid));
+            binds.add(new BindUserOauth().setIdentityType(IdentityType.WX_UNIONID).setIdentifier(unionid));
+            bindAuthCode.setBinds(binds);
 			oauthTempRepository.saveBindAuthCode(wxcode, bindAuthCode);
 			
 			// 微信没有绑定账号

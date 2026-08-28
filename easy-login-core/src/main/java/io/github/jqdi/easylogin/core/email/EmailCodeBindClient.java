@@ -1,6 +1,8 @@
 package io.github.jqdi.easylogin.core.email;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -58,10 +60,9 @@ public class EmailCodeBindClient implements LoginClient {
 
 		if (userId == null) {// 账号不存在
 			// 创建新用户
-			String nickname = Optional.ofNullable(mobileBindAuthCode).map(BindAuthCode::getNickname).orElse(null);
-			String avator = Optional.ofNullable(mobileBindAuthCode).map(BindAuthCode::getHeadimgurl).orElse(null);
-
-			userId = oauthRepository.registerUser(IdentityType.EMAIL, email, nickname, avator);
+            Map<String, String> attachDataMap =
+                Optional.ofNullable(mobileBindAuthCode).map(BindAuthCode::getAttachDataMap).orElse(Collections.emptyMap());
+            userId = oauthRepository.registerUser(IdentityType.EMAIL, email, attachDataMap);
 		}
 
 		// 绑定authcode

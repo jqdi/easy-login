@@ -1,6 +1,7 @@
 package io.github.jqdi.easylogin.core.model;
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -9,13 +10,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BindAuthCode {
 	/**
-	 * 昵称
+	 * 附加数据
 	 */
-	private String nickname;
-	/**
-	 * 头像
-	 */
-	private String headimgurl;
+	private Map<String,String> attachDataMap;
 
 	/**
 	 * 授权绑定

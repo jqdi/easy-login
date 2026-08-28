@@ -1,7 +1,6 @@
 package io.github.jqdi.easylogin.core.qq;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -62,8 +61,12 @@ public class QQClient implements LoginClient {
 		if (userId == null) {
 			// 存储BindAuthCode相关信息
 			BindAuthCode bindAuthCode = new BindAuthCode();
-			bindAuthCode.setNickname(Optional.ofNullable(userInfo).map(UserInfo::getNickname).orElse(null));
-			bindAuthCode.setHeadimgurl(Optional.ofNullable(userInfo).map(UserInfo::getHeadimgurl).orElse(null));
+            Map<String, String> attachDataMap = new HashMap<>();
+            if (userInfo != null) {
+                attachDataMap.put("nickname", userInfo.getNickname());
+                attachDataMap.put("headimgurl", userInfo.getHeadimgurl());
+            }
+            bindAuthCode.setAttachDataMap(attachDataMap);
 			List<BindUserOauth> binds = Lists.newArrayList();
 			binds.add(new BindUserOauth().setIdentityType(IdentityType.QQ_OPENID).setIdentifier(openid));
 			bindAuthCode.setBinds(binds);

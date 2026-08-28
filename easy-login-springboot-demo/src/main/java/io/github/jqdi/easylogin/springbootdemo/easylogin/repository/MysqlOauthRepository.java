@@ -66,7 +66,7 @@ public class MysqlOauthRepository implements OauthRepository {
 	}
 
 	@Override
-	public String registerUser(String identityType, String identifier, String nickname, String avatar) {
+	public String registerUser(String identityType, String identifier, Map<String, String> attachDataMap) {
 		CacheKey cacheKey = new CacheKey().setIdentityType(identityType).setIdentifier(identifier);
 		CacheValue cacheValue = cache.get(cacheKey);
 		if (cacheValue == null) {
